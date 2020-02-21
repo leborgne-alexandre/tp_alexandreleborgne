@@ -3,18 +3,78 @@
 {% block title %}Hello PanierController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/ss7/Desktop/tp_alexandreleborgne/src/Controller/PanierController.php'|file_link(0) }}">src/Controller/PanierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/ss7/Desktop/tp_alexandreleborgne/templates/panier/index.html.twig'|file_link(0) }}">templates/panier/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if produits is empty %}
+
+      <h1 class="text-center">Il n'y pas d'article pour le moment il faut en ajouter : <a href="{{path('produits')}}"> ici</a></h1>
+
+        {% else %}
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Stock</th>
+        <th>Image</th>
+        <th>Supprimer</th>
+        <th>Statut</th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+
+
+    {% for panier in paniers %}
+
+        <tr>
+            <td><a href="{{path('produit', {'id': panier.produit.id})}}">{{panier.produit.nom}}</a></td>
+            <td> {{ panier.produit.price }}</td>
+            <td>{{ panier.produit.stock}}</td>
+            <td><img style="width:100px" src="{{ asset(asset('uploads/'~ panier.produit.photo)) }}" alt=""></td>
+            <td><a href="{{path('panier_delete', {'id': panier.id})}}"><button class="btn btn-danger">Supprimer du panier</button></a></td>
+
+
+
+            {% if panier.produit.price is false  %}
+
+            <p class="text-danger">Pas encore acheté</p>
+
+            {% endif %}
+
+        </tr>
+
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    {% if produits is not empty %}
+
+    <h1 class="text-center">Ajouter un produit au panier</h1>
+
+    {{ form(addPanier) }}
+
+
+
+
+
+
+    <h1>Mon Panier</h1>
+
+    <h3>Vous avez : {{ paniers | length }} articles</h3>
+
+
+        {% else %}
+
+        Vous avez 0 articles
+
+    {% endif %}
+
+
 {% endblock %}

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProduitController extends AbstractController
 {
     /**
-     * @Route("/", name="produits")
+     * @Route("/produit", name="produits")
      */
     public function index(Request $request)
     {
@@ -66,25 +66,14 @@ class ProduitController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="produit")
+     * @Route("/produit/{id}", name="produit")
      */
-    public function produit(Produit $produit=null, Request $request){
+    public function produit(Produit $produit=null){
 
         if($produit != null){
 
-            $form = $this->createForm(ProduitType::class, $produit);
-            $form->handleRequest($request);
-
-            if($form->isSubmitted() && $form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($produit);
-                $em->flush();
-                $this->addFlash('success', 'Matière mise à jour');
-            }
-
             return $this->render('produit/produit.html.twig', [
                 'produit' => $produit,
-                'edit_produit' => $form->createView()
             ]);
         }
         else{
@@ -116,6 +105,5 @@ class ProduitController extends AbstractController
     }
 
 }
-
 
 

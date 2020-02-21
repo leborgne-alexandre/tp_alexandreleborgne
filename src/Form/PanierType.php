@@ -2,26 +2,32 @@
 
 namespace App\Form;
 
+use App\Entity\Panier;
 use App\Entity\Produit;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OrderType extends AbstractType
+class PanierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('price')
-            ->add('stock')
+            ->add("produit", EntityType::class, [
+                "class" => Produit::class,
+                "choice_label" => "nom"
+            ])
+            ->add('quantity')
+            ->add("save", SubmitType::class)
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Produit::class,
+            'data_class' => Panier::class,
         ]);
     }
 }
