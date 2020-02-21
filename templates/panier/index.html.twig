@@ -38,11 +38,14 @@
             <td><img style="width:100px" src="{{ asset(asset('uploads/'~ panier.produit.photo)) }}" alt=""></td>
             <td><a href="{{path('panier_delete', {'id': panier.id})}}"><button class="btn btn-danger">Supprimer du panier</button></a></td>
 
+            {% if panier.state == false %}
+
+            <td><p class="text-danger">Pas encore acheté</p></td>
 
 
-            {% if panier.produit.price is false  %}
+                {% else  %}
 
-            <p class="text-danger">Pas encore acheté</p>
+                    <td><p class="text-succes">Achete</p></td>
 
             {% endif %}
 
@@ -59,9 +62,6 @@
     <h1 class="text-center">Ajouter un produit au panier</h1>
 
     {{ form(addPanier) }}
-
-
-
 
 
 
