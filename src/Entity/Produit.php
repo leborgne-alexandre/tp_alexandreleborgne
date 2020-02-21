@@ -45,7 +45,7 @@ class Produit
     private $stock;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="produit")
+     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="produit",cascade={"persist", "remove"})
      */
     private $paniers;
 
