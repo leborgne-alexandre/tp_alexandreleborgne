@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page produits{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center">Page Produits</h1>
+
+    {% if produit is not empty %}
+
+        <img style="width:200px" src="{{ asset(asset('uploads/'~ produit.photo)) }}" alt="">
+        <h3>Description : {{ produit.nom }}</h3>
+         <h3>Stock : {{ produit.stock}}</h3>
+         <h3>Prix: {{ produit.price}}</h3>
+
+
+
+    {% endif %}
+
+
+    {{ form(edit_produit) }}
+
+{% endblock %}
